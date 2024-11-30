@@ -1,42 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Table from 'react-bootstrap/Table'
 
-const Blog = ({ blog, handleLike, handleRemove, user }) => {
-  const [visible, setVisible] = useState(false)
-
+const Blog = ({ blog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
     borderWidth: 1,
-    marginBottom: 5
-  }
-
-  const toggleVisibility = () => {
-    setVisible(!visible)
+    marginBottom: 5,
   }
 
   return (
     <div style={blogStyle} data-testid={`blog-${blog.id}`}>
-      <div>
-        {blog.title} by {blog.author}
-        <button onClick={toggleVisibility} data-testid={`view-button-${blog.id}`}>
-          {visible ? 'Hide' : 'View'}
-        </button>
-      </div>
-
-      {visible && (
-        <div>
-          <p>URL: {blog.url}</p>
-          <p>
-            Likes: {blog.likes}
-            <button onClick={() => handleLike(blog)}>Like</button>
-          </p>
-          <p>User: {blog.user.name}</p>
-          {user.username === blog.user.username && (
-            <button onClick={() => handleRemove(blog)}>remove</button>
-          )}
-        </div>
-      )}
+      <Table striped>
+        <Link to={`/blogs/${blog.id}`}>
+          {blog.title} by {blog.author}
+        </Link>
+      </Table>
     </div>
   )
 }
